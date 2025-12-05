@@ -1,0 +1,110 @@
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: "Inter", sans-serif;
+  background-color: #161616;
+  color: white;
+}
+
+#output {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 15px;
+  flex: 1;
+  padding: 10px;
+  font-size: 40px;
+  font-weight: 500;
+}
+
+#expression {
+  color: #a0a0a0;
+}
+
+#expression.fade {
+  animation: fadeSmooth 0.18s ease-out;
+}
+
+#result.fade {
+  animation: fadeSmooth 0.25s ease-out;
+}
+
+@keyframes fadeSmooth {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#input {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 72px;
+  gap: 10px;
+  padding: 10px;
+}
+
+.btn {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 32px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  box-shadow: #0a0a0a 0px 2px 5px -1px;
+
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out,
+    background-color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: #000000 0px 4px 10px -2px;
+}
+
+.btn.pressed {
+  transform: scale(0.96) translateY(1px);
+  box-shadow: #050505 0px 1px 3px -1px;
+  filter: brightness(1.05);
+}
+
+.light {
+  background-color: #4e505f;
+}
+.light:hover {
+  background-color: #8890a5;
+}
+
+.red {
+  background-color: #ef233c;
+}
+.red:hover {
+  background-color: #f25466;
+}
+
+.dark {
+  background-color: #2e2f38;
+}
+.dark:hover {
+  background-color: #505266;
+}
+
+.zero {
+  grid-column: 1 / span 2;
+}
+.decimal {
+  grid-column: 3;
+}
+.equals {
+  grid-column: 4;
+  grid-row: 4 / span 2;
+}
