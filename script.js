@@ -4,32 +4,28 @@ const resultDiv = document.getElementById("result");
 
 let expression = "";
 let result = "";
-
 let lastExpression = "";
 
 function buttonClick(event) {
   const target = event.target.closest("button");
   if (!target) return;
 
-  target.classList.add("pressed");
-  setTimeout(() => target.classList.remove("pressed"), 120);
-
   const action = target.dataset.actions;
   const value = target.dataset.value;
+
+  target.classList.add("pressed");
+  setTimeout(() => target.classList.remove("pressed"), 120);
 
   switch (action) {
     case "number":
       addValue(value);
       break;
-
     case "clear":
       clear();
       break;
-
     case "backspace":
       backspace();
       break;
-
     case "addition":
     case "subtraction":
     case "multiplication":
@@ -40,19 +36,15 @@ function buttonClick(event) {
         addValue(value);
       }
       break;
-
     case "submit":
       submit();
       break;
-
     case "negate":
       negate();
       break;
-
     case "mod":
       percentage();
       break;
-
     case "decimal":
       decimal(value);
       break;
@@ -63,13 +55,15 @@ function buttonClick(event) {
 
 inputBox.addEventListener("click", buttonClick);
 
-function updateDisplay(expression, resultValue) {
-  const displayExpression = expression.replace(/\*/g, "×").replace(/\//g, "÷");
+function updateDisplay(expressionValue, resultValue) {
+  const displayExpression = expressionValue
+    .replace(/\*/g, "×")
+    .replace(/\//g, "÷");
 
   expressionDiv.textContent = displayExpression;
   resultDiv.textContent = resultValue;
 
-  const isFirstNonEmpty = lastExpression === "" && expression !== "";
+  const isFirstNonEmpty = lastExpression === "" && expressionValue !== "";
 
   if (isFirstNonEmpty) {
     expressionDiv.classList.remove("fade");
@@ -77,7 +71,7 @@ function updateDisplay(expression, resultValue) {
     expressionDiv.classList.add("fade");
   }
 
-  lastExpression = expression;
+  lastExpression = expressionValue;
 }
 
 function animateResult() {
@@ -114,7 +108,6 @@ function submit() {
     animateResult();
     return;
   }
-
   result = evaluateExpression();
   expression = "";
   lastExpression = "";
@@ -166,3 +159,47 @@ function decimal(value) {
     addValue(value);
   }
 }
+
+document.addEventListener("keydown", (e) => {
+  const key = e.key;
+
+  if (!isNaN(key) && key !== " ") {
+    addValue(key);
+    updateDisplay(expression, result);
+    return;
+  }
+
+  if (["+", "-", "*", "/"].includes(key)) {
+    if (expression === "" && result !== "") {
+      startFromResult(key);
+    } else if (expression !== "" && !isLastCharOperator()) {
+      addValue(key);
+    }
+    updateDisplay(expression, result);
+    return;
+  }
+
+  if (key === "Enter") {
+    submit();
+    updateDisplay(expression, result);
+    return;
+  }
+
+  if (key === ".") {
+    decimal(".");
+    updateDisplay(expression, result);
+    return;
+  }
+
+  if (key === "Backspace") {
+    backspace();
+    updateDisplay(expression, result);
+    return;
+  }
+
+  if (key === "Escape") {
+    clear();
+    updateDisplay(expression, result);
+    return;
+  }
+});

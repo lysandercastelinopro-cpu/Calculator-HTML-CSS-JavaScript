@@ -61,20 +61,38 @@ body {
   cursor: pointer;
   color: white;
   box-shadow: #0a0a0a 0px 2px 5px -1px;
-
   transition: transform 0.1s ease-out, box-shadow 0.1s ease-out,
     background-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: #000000 0px 4px 10px -2px;
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: #000000 0px 4px 10px -2px;
+  }
+
+  .light:hover {
+    background-color: #8890a5;
+  }
+
+  .blue:hover {
+    background-color: #f25466;
+  }
+
+  .dark:hover {
+    background-color: #505266;
+  }
 }
 
 .btn.pressed {
   transform: scale(0.96) translateY(1px);
   box-shadow: #050505 0px 1px 3px -1px;
   filter: brightness(1.05);
+}
+
+.btn:focus {
+  outline: none;
 }
 
 .light {
